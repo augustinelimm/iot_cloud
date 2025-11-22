@@ -8,7 +8,7 @@ const MOCK_WASHERS = [
     name: "Washer 1",
     capacity: "10kg",
     status: "MACHINE IN USE",
-    timeLeft: "18 min",
+    timeLeft: "10 min",
     progress: 65
   },
   {
