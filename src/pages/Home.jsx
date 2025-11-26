@@ -1,41 +1,6 @@
 import { useState, useEffect } from 'react';
 import { WasherCard } from '../components/WasherCard';
-
-// Mock data structure - replace with actual API response
-const MOCK_WASHERS = [
-  {
-    id: 1,
-    name: "Washer 1",
-    capacity: "10kg",
-    status: "MACHINE IN USE",
-    timeLeft: "10 min",
-    progress: 65
-  },
-  {
-    id: 2,
-    name: "Washer 2",
-    capacity: "10kg",
-    status: "MACHINE IN USE",
-    timeLeft: "22 min",
-    progress: 45
-  },
-  {
-    id: 3,
-    name: "Washer 3",
-    capacity: "8kg",
-    status: "AVAILABLE",
-    timeLeft: null,
-    progress: 0
-  },
-  {
-    id: 4,
-    name: "Washer 4",
-    capacity: "12kg",
-    status: "AVAILABLE",
-    timeLeft: null,
-    progress: 0
-  }
-];
+import config from '../config/config';
 
 const Home = () => {
   const [washers, setWashers] = useState([]);
@@ -47,31 +12,19 @@ const Home = () => {
     try {
       setError(null);
       
-      // ============================================================
-      // AWS API INTEGRATION - Uncomment and configure when ready
-      // ============================================================
-      // const response = await fetch(config.apiEndpoint + '/washers', {
-      //   method: 'GET',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //     // Uncomment if your API Gateway requires an API key
-      //     // 'x-api-key': config.apiKey,
-      //   },
-      //   signal: AbortSignal.timeout(config.requestTimeout),
-      // });
-      // 
-      // if (!response.ok) {
-      //   throw new Error(`API request failed: ${response.status} ${response.statusText}`);
-      // }
-      // 
-      // const washerData = await response.json();
-      // setWashers(washerData);
-      // ============================================================
+      const response = await fetch(`${config.apiEndpoint}/washers`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
       
-      // MOCK DATA - Remove this section when using real API
-      await new Promise(resolve => setTimeout(resolve, 500));
-      setWashers(MOCK_WASHERS);
-      // END MOCK DATA
+      if (!response.ok) {
+        throw new Error(`API request failed: ${response.status} ${response.statusText}`);
+      }
+      
+      const washerData = await response.json();
+      setWashers(washerData);
       
       setLastUpdated(new Date());
     } catch (error) {
@@ -86,8 +39,8 @@ const Home = () => {
     // Fetch washer status on initial load
     fetchWasherStatus();
     
-    // Set up automatic polling every 30 seconds for real-time updates
-    const pollingInterval = setInterval(fetchWasherStatus, 30000);
+    // Set up automatic polling using config.pollingInterval (30 seconds)
+    const pollingInterval = setInterval(fetchWasherStatus, config.pollingInterval);
     
     // Clean up interval when component unmounts
     return () => clearInterval(pollingInterval);
