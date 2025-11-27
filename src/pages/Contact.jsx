@@ -38,7 +38,9 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
+    // TODO: Implement form submission to backend
+    alert('Thank you for your message! We will get back to you soon.');
+    setFormData({ name: "", email: "", message: "" });
   };
 
   return (

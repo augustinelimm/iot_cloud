@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { WasherCard } from '../components/WasherCard';
+import { fetchWashers } from '../utils/api';
 import config from '../config/config';
 
 const Home = () => {
@@ -11,21 +12,8 @@ const Home = () => {
   const fetchWasherStatus = async () => {
     try {
       setError(null);
-      
-      const response = await fetch(`${config.apiEndpoint}/washers`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      
-      if (!response.ok) {
-        throw new Error(`API request failed: ${response.status} ${response.statusText}`);
-      }
-      
-      const washerData = await response.json();
+      const washerData = await fetchWashers();
       setWashers(washerData);
-      
       setLastUpdated(new Date());
     } catch (error) {
       console.error('Failed to fetch washer status:', error);
@@ -53,12 +41,13 @@ const Home = () => {
 
   if (loading && washers.length === 0) {
     return (
-      <div>
-        <div>
-          <div></div>
-          <p>Loading washer status...</p>
+      <main className="min-h-screen bg-gray-50 flex items-center justify-center py-8">
+        <div className="max-w-md w-full mx-auto">
+          <div className="bg-white rounded-lg shadow-sm p-8 text-center">
+            <p className="text-gray-700">Loading washer status...</p>
+          </div>
         </div>
-      </div>
+      </main>
     );
   }
 

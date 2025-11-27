@@ -1,5 +1,5 @@
 const config = {
-  apiEndpoint: 'https://iot-washer.duckdns.org',
+  apiEndpoint: import.meta.env.VITE_API_ENDPOINT || 'https://api.iotwasher.com',
   pollingInterval: 30000,
 };
 
