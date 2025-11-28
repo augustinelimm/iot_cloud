@@ -1,45 +1,17 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { WasherCard } from '../components/WasherCard';
-import { fetchWashers } from '../utils/api';
+import { useReadings } from '../hooks/useReadings';
 import config from '../config/config';
 
 const Home = () => {
-  const [washers, setWashers] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [lastUpdated, setLastUpdated] = useState(new Date());
-
-  const fetchWasherStatus = async () => {
-    try {
-      setError(null);
-      const washerData = await fetchWashers();
-      setWashers(washerData);
-      setLastUpdated(new Date());
-    } catch (error) {
-      console.error('Failed to fetch washer status:', error);
-      setError('Unable to load washer status. Please try again later.');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    // Fetch washer status on initial load
-    fetchWasherStatus();
-    
-    // Set up automatic polling using config.pollingInterval (30 seconds)
-    const pollingInterval = setInterval(fetchWasherStatus, config.pollingInterval);
-    
-    // Clean up interval when component unmounts
-    return () => clearInterval(pollingInterval);
-  }, []);
+  const { data: readingsData, loading, error, refetch } = useReadings(config.pollingInterval);
+  const [lastUpdated] = useState(new Date());
 
   const handleRefresh = () => {
-    setLoading(true);
-    fetchWasherStatus();
+    refetch();
   };
 
-  if (loading && washers.length === 0) {
+  if (loading && !readingsData) {
     return (
       <main className="min-h-screen bg-gray-50 flex items-center justify-center py-8">
         <div className="max-w-md w-full mx-auto">
@@ -66,13 +38,31 @@ const Home = () => {
             </div>
           )}
 
-          <div>
-            {washers.map((washer) => (
-              <WasherCard
-                key={washer.id}
-                washer={washer}
-              />
-            ))}
+          <div className="p-6">
+            {readingsData?.data && readingsData.data.length > 0 ? (
+              <ul className="space-y-4">
+                {readingsData.data.map((reading) => (
+                  <li key={reading.id} className="p-4 border border-gray-200 rounded-lg bg-gray-50">
+                    <div className="mb-2">
+                      <span className="font-semibold">Status: </span>
+                      <span className={reading.data.state === 'RUNNING' ? 'text-green-600' : 'text-gray-600'}>
+                        {reading.data.state === 'RUNNING' ? 'Machine in use' : reading.data.state}
+                      </span>
+                    </div>
+                    <div className="mb-2">
+                      <span className="font-semibold">Machine ID: </span>
+                      {reading.data.MachineID}
+                    </div>
+                    <div>
+                      <span className="font-semibold">Cycle Number: </span>
+                      {reading.data.cycle_number}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-gray-500 text-center">No machine data available</p>
+            )}
           </div>
 
           {/* Last updated timestamp and refresh button */}
