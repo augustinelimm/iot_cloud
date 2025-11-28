@@ -13,7 +13,8 @@ export const useReadings = (interval = null) => {
   const fetchReadings = async () => {
     try {
       setLoading(true);
-      const response = await fetch('http://47.129.194.3:3000/api/readings');
+      const apiUrl = import.meta.env.VITE_READINGS_API || '/api/readings';
+      const response = await fetch(apiUrl);
       
       if (!response.ok) {
         throw new Error(`API request failed: ${response.status} ${response.statusText}`);

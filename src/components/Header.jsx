@@ -167,13 +167,6 @@ export const Header = ({ currentPage, onNavigate }) => {
                 >
                   About
                 </button>
-                <button
-                  role="menuitem"
-                  onClick={() => handleNavigation('contact')}
-                  className={`w-full text-left px-4 py-3 text-sm hover:bg-gray-100 transition-colors ${currentPage === 'contact' ? 'bg-gray-50 font-semibold' : ''}`}
-                >
-                  Contact
-                </button>
               </div>
             )}
           </div>

@@ -1,17 +1,59 @@
-import { useState } from 'react';
 import { WasherCard } from '../components/WasherCard';
 import { useReadings } from '../hooks/useReadings';
 import config from '../config/config';
 
 const Home = () => {
   const { data: readingsData, loading, error, refetch } = useReadings(config.pollingInterval);
-  const [lastUpdated] = useState(new Date());
+
+  // ===== MOCK DATA - Comment out to use real API =====
+  const mockData = {
+    success: true,
+    data: [
+      {
+        id: "1",
+        data: {
+          state: "RUNNING",
+          current: 2.35,
+          MachineID: "WM-01",
+          timestamp: "2025-11-29T10:30:00.000Z",
+          cycle_number: 12
+        },
+        created_at: "2025-11-29T10:30:00.000Z"
+      },
+      {
+        id: "2",
+        data: {
+          state: "AVAILABLE",
+          current: 0,
+          MachineID: "WM-02",
+          timestamp: "2025-11-29T10:30:00.000Z",
+          cycle_number: 8
+        },
+        created_at: "2025-11-29T10:30:00.000Z"
+      },
+      {
+        id: "3",
+        data: {
+          state: "RUNNING",
+          current: 1.85,
+          MachineID: "WM-03",
+          timestamp: "2025-11-29T10:30:00.000Z",
+          cycle_number: 5
+        },
+        created_at: "2025-11-29T10:30:00.000Z"
+      }
+    ],
+    count: 3
+  };
+  // const displayData = mockData; // Use mock data
+  const displayData = readingsData; // Uncomment to use real API
+  // ===== END MOCK DATA =====
 
   const handleRefresh = () => {
     refetch();
   };
 
-  if (loading && !readingsData) {
+  if (loading && !displayData) {
     return (
       <main className="min-h-screen bg-gray-50 flex items-center justify-center py-8">
         <div className="max-w-md w-full mx-auto">
@@ -38,38 +80,35 @@ const Home = () => {
             </div>
           )}
 
-          <div className="p-6">
-            {readingsData?.data && readingsData.data.length > 0 ? (
-              <ul className="space-y-4">
-                {readingsData.data.map((reading) => (
-                  <li key={reading.id} className="p-4 border border-gray-200 rounded-lg bg-gray-50">
-                    <div className="mb-2">
-                      <span className="font-semibold">Status: </span>
-                      <span className={reading.data.state === 'RUNNING' ? 'text-green-600' : 'text-gray-600'}>
-                        {reading.data.state === 'RUNNING' ? 'Machine in use' : reading.data.state}
-                      </span>
-                    </div>
-                    <div className="mb-2">
-                      <span className="font-semibold">Machine ID: </span>
-                      {reading.data.MachineID}
-                    </div>
-                    <div>
-                      <span className="font-semibold">Cycle Number: </span>
-                      {reading.data.cycle_number}
-                    </div>
-                  </li>
-                ))}
-              </ul>
+          <div>
+            {displayData?.data && displayData.data.length > 0 ? (
+              displayData.data.map((reading) => {
+                // Map API data to WasherCard format
+                const washer = {
+                  id: reading.id,
+                  name: reading.data.MachineID,
+                  capacity: '7kg', // You can adjust this or get from API if available
+                  status: reading.data.state === 'RUNNING' ? 'IN USE' : 'AVAILABLE',
+                  timeLeft: reading.data.state === 'RUNNING' ? 'Unknown' : null,
+                  progress: reading.data.state === 'RUNNING' ? 50 : 0 // You can calculate this based on cycle data
+                };
+                
+                return (
+                  <WasherCard
+                    key={reading.id}
+                    washer={washer}
+                  />
+                );
+              })
             ) : (
-              <p className="text-gray-500 text-center">No machine data available</p>
+              <div className="p-6">
+                <p className="text-gray-500 text-center">No machine data available</p>
+              </div>
             )}
           </div>
 
-          {/* Last updated timestamp and refresh button */}
+          {/* Refresh button */}
           <div className="text-center py-4 px-4 border-t">
-            <p className="text-sm text-gray-600 mb-2">
-              Last updated: {lastUpdated.toLocaleTimeString()}
-            </p>
             <button onClick={handleRefresh} disabled={loading} className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50">
               {loading ? 'Refreshing...' : 'Refresh now'}
             </button>
