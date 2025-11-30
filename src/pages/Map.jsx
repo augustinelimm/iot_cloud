@@ -98,10 +98,10 @@ const Map = () => {
             <div style={{ position: 'absolute', left: '0', top: '0', width: '800px', height: '650px', border: '4px solid black' }}></div>
             
             {/* Vertical wall after column 1 */}
-            <div style={{ position: 'absolute', left: '198px', top: '0', width: '20px', height: '490px', background: '#9CA3AF' }}></div>
+            <div style={{ position: 'absolute', left: '198px', top: '5px', width: '20px', height: '485px', background: '#9CA3AF' }}></div>
 
             {/* Vertical wall before right section (shorter) */}
-            <div style={{ position: 'absolute', left: '518px', top: '0', width: '20px', height: '380px', background: '#9CA3AF' }}></div>
+            <div style={{ position: 'absolute', left: '518px', top: '5px', width: '20px', height: '375px', background: '#9CA3AF' }}></div>
             
             {/* Horizontal wall forming T with vertical wall */}
             <div style={{ position: 'absolute', left: '428px', top: '360px', width: '200px', height: '20px', background: '#9CA3AF' }}></div>
@@ -110,11 +110,10 @@ const Map = () => {
             <div style={{ position: 'absolute', left: '198px', bottom: '160px', width: '140px', height: '20px', background: '#9CA3AF' }}></div>
 
             {/* Horizontal wall middle (below counter) */}
-            <div style={{ position: 'absolute', left: '710px', top: '360px', width: '90px', height: '20px', background: '#9CA3AF' }}></div>
+            <div style={{ position: 'absolute', left: '710px', top: '360px', width: '85px', height: '20px', background: '#9CA3AF' }}></div>
 
             {/* Door bottom */}
-            <div style={{ position: 'absolute', left: '320px', bottom: '0', width: '170px', height: '20px', background: '#9CA3AF', border: '2px solid black' }}></div>
-            <div style={{ position: 'absolute', left: '370px', bottom: '25px', fontSize: '12px', fontWeight: 'bold', color: 'black' }}>Door</div>
+            <div style={{ position: 'absolute', left: '420px', bottom: '10px', fontSize: '12px', fontWeight: 'bold', color: 'black' }}>Door</div>
 
             {/* Left Column (Machines 1-4) */}
             <div style={{ position: 'absolute', left: '95px', top: '30px' }}>
@@ -145,7 +144,7 @@ const Map = () => {
             </div>
 
             {/* Counter (gray background behind sinks) */}
-            <div style={{ position: 'absolute', left: '428px', top: '0', width: '90px', height: '360px', background: '#4B5563' }}></div>
+            <div style={{ position: 'absolute', left: '428px', top: '5px', width: '90px', height: '355px', background: '#4B5563' }}></div>
 
             {/* Sinks */}
             <div style={{ position: 'absolute', left: '448px', top: '50px', width: '60px', height: '70px', background: '#60A5FA', borderRadius: '4px', border: '2px solid #2563EB' }}></div>
