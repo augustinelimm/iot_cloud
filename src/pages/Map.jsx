@@ -71,7 +71,7 @@ const Map = () => {
       <div className="max-w-7xl mx-auto px-8">
         <div className="bg-white rounded-lg shadow-sm p-8">
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-semibold text-gray-900 mb-2">Laundry Mat Layout</h1>
+            <h1 className="text-3xl font-semibold text-gray-900 mb-2">Laundromat Layout</h1>
             <p className="text-gray-600 text-lg">Real-time view of machine locations and status</p>
             {loading && <p className="text-sm text-gray-500 mt-2">Updating status...</p>}
           </div>
