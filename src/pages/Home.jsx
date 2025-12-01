@@ -2,7 +2,7 @@ import { WasherCard } from '../components/WasherCard';
 import { useReadings } from '../hooks/useReadings';
 import config from '../config/config';
 
-const Home = ({ language = 'EN' }) => {
+const Home = ({ language = 'EN', onMachineClick }) => {
   const { data: readingsData, loading, error, refetch } = useReadings(config.pollingInterval);
 
   // ===== MOCK DATA - Comment out to use real API =====
@@ -125,6 +125,7 @@ const Home = ({ language = 'EN' }) => {
                         key={reading.id}
                         washer={washer}
                         language={language}
+                        onClick={() => onMachineClick && onMachineClick(reading.data.MachineID)}
                       />
                     );
                   })}

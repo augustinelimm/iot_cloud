@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import ProgressBar from "./ProgressBar";
 
-export const WasherCard = ({ washer, language = 'EN' }) => {
+export const WasherCard = ({ washer, language = 'EN', onClick }) => {
   const {
     name,
     capacity,
@@ -163,7 +163,10 @@ export const WasherCard = ({ washer, language = 'EN' }) => {
   );
 
   return (
-    <div className="flex flex-col items-center py-8">
+    <div 
+      className="flex flex-col items-center py-8 cursor-pointer hover:bg-gray-50 rounded-lg transition-colors"
+      onClick={onClick}
+    >
       {/* Washer Icon */}
       <div className="mb-4">
         <WasherIcon />

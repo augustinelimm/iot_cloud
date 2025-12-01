@@ -1,7 +1,7 @@
 import { useReadings } from '../hooks/useReadings';
 import config from '../config/config';
 
-const Map = () => {
+const Map = ({ onMachineClick }) => {
   const { data: readingsData, loading } = useReadings(config.pollingInterval);
 
   // Create a map of machine statuses by MachineID
@@ -32,7 +32,11 @@ const Map = () => {
     const bgColor = isRunning ? 'bg-[#4a7c8c]' : isOccupied ? 'bg-[#d4a017]' : 'bg-[#9bc14b]';
 
     return (
-      <div className="flex flex-col items-center" style={position}>
+      <div 
+        className="flex flex-col items-center cursor-pointer hover:opacity-80 transition-opacity" 
+        style={position}
+        onClick={() => onMachineClick && onMachineClick(machineId)}
+      >
         <svg width="60" height="75" viewBox="18 18 104 144" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect x="20" y="20" width="100" height="140" rx="10" fill={color} stroke={color} strokeWidth="2"/>
           <rect x="32" y="35" width="25" height="5" rx="2.5" fill="white" opacity="0.5"/>
@@ -93,9 +97,10 @@ const Map = () => {
           </div>
 
           {/* Layout Map */}
-          <div className="relative mx-auto" style={{ width: '800px', height: '650px', background: 'white' }}>
+          <div className="relative mx-auto max-w-full overflow-auto px-4 flex justify-center">
+            <div className="relative" style={{ width: '800px', height: '650px', background: 'white' }}>
             {/* Outer border - black */}
-            <div style={{ position: 'absolute', left: '0', top: '0', width: '800px', height: '650px', border: '4px solid black' }}></div>
+            <div style={{ position: 'absolute', left: '0', top: '0', width: '800px', height: '650px', border: '2px solid black' }}></div>
             
             {/* Vertical wall after column 1 */}
             <div style={{ position: 'absolute', left: '198px', top: '5px', width: '20px', height: '485px', background: '#9CA3AF' }}></div>
@@ -178,6 +183,7 @@ const Map = () => {
             </div>
             <div style={{ position: 'absolute', left: '721px', bottom: '30px' }}>
               <Dryer />
+            </div>
             </div>
           </div>
         </div>
