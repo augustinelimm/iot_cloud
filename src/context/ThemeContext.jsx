@@ -24,7 +24,7 @@ export const ThemeProvider = ({ children }) => {
   const [isBusinessMode, setIsBusinessMode] = useState(() => {
     // Check localStorage for saved business mode preference
     const saved = localStorage.getItem('businessMode');
-    return saved === 'true';
+    return saved === 'true' ? true : false;
   });
 
   useEffect(() => {
