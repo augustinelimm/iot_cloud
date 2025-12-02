@@ -147,7 +147,9 @@ const WasherDetail = ({ machineId, onBack, language }) => {
         <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8">
           {/* Header */}
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">{machineId}</h1>
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+              Washer {machineId.replace('WM-', '')}
+            </h1>
           </div>
 
           {/* Large Washing Machine Visualization */}
@@ -216,7 +218,7 @@ const WasherDetail = ({ machineId, onBack, language }) => {
                 <div className="text-right">
                   <p className="text-2xl font-bold text-blue-600 dark:text-blue-400">{timeRemaining}</p>
                   <p className="text-sm text-gray-600 dark:text-gray-400">
-                    {language === 'ZH' ? '分钟剩余' : 'mins remaining'}
+                    {language === 'ZH' ? '分钟剩余（估计）' : 'mins remaining (est.)'}
                   </p>
                 </div>
               </div>
