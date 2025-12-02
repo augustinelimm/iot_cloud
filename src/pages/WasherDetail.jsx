@@ -173,7 +173,7 @@ const WasherDetail = ({ machineId, onBack, language }) => {
                         <div 
                           className={`w-16 h-16 rounded-full flex items-center justify-center border-4 transition-all duration-300 ${
                             isActive 
-                              ? 'bg-blue-600 border-blue-600 scale-110' 
+                              ? 'bg-blue-600 border-blue-600' 
                               : isCompleted
                                 ? 'bg-green-500 border-green-500'
                                 : 'bg-gray-200 border-gray-300'
