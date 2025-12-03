@@ -16,7 +16,7 @@ const WasherDetail = ({ machineId, onBack, language }) => {
   const currentPhase = machineData?.data?.ml_phase || null;
   const powerConsumption = machineData?.data?.current || 0;
   const cycleNumber = machineData?.data?.cycle_number || 0;
-  const totalCyclesUsed = cycleNumber * 100; // Inflate the cycle number
+  const totalCyclesUsed = cycleNumber; // Use the cycle number directly
   const maintenanceThreshold = 30000; // Maintenance needed at 30,000 cycles
   const maintenanceProgress = (totalCyclesUsed / maintenanceThreshold) * 100;
   const isAvailable = state === 'IDLE';
