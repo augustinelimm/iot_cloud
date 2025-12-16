@@ -41,7 +41,7 @@ export const useReadings = (interval = null) => {
   const fetchReadings = async () => {
     try {
       setLoading(true);
-      const apiUrl = import.meta.env.VITE_READINGS_API || '/api/readings';
+      const apiUrl = 'http://13.214.142.44:3000/api/readings';
       const response = await fetch(apiUrl);
       
       if (!response.ok) {
