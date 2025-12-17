@@ -49,8 +49,6 @@ export const useReadings = (interval = null) => {
       }
       
       const jsonData = await response.json();
-      console.log('Fetched readings:', jsonData);
-      
       // Merge real data with mock data for machines 5-11
       const mockData = getMockData();
       const mergedData = {
